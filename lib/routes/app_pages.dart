@@ -1,8 +1,10 @@
+import 'package:chat_tutorial/controllers/main_controller.dart';
 import 'package:chat_tutorial/controllers/profile_controller.dart';
 import 'package:chat_tutorial/routes/app_routes.dart';
 import 'package:chat_tutorial/views/auth/forgot_password_view.dart';
 import 'package:chat_tutorial/views/auth/login_view.dart';
 import 'package:chat_tutorial/views/auth/register_view.dart';
+import 'package:chat_tutorial/views/main_view.dart';
 import 'package:chat_tutorial/views/profile/change_password_view.dart';
 import 'package:chat_tutorial/views/profile/profile_view.dart';
 import 'package:chat_tutorial/views/splash_view.dart';
@@ -18,6 +20,13 @@ class AppPages {
     GetPage(
       name: AppRoutes.forgotPassword,
       page: () => const ForgotPasswordView(),
+    ),
+    GetPage(
+      name: AppRoutes.main,
+      page: () => const MainView(),
+      binding: BindingsBuilder(() {
+        Get.put(MainController());
+      }),
     ),
     GetPage(
       name: AppRoutes.profile,

@@ -57,10 +57,10 @@ class ChangePasswordController extends GetxController {
         throw Exception('No User Logged In');
       }
 
-      final credential = EmailAuthProvider.credential(
-        email: user.email!,
-        password: currentPasswordController.text,
-      );
+      // final credential = EmailAuthProvider.credential(
+      //   email: user.email!,
+      //   password: currentPasswordController.text,
+      // );
 
 
       await user.updatePassword(newPasswordController.text);
