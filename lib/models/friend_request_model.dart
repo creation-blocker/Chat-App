@@ -3,7 +3,7 @@ enum FriendRequestStatus { pending, accepted, declined }
 class FriendRequestModel {
   final String id;
   final String senderId;
-  final String receiverid;
+  final String receiverId;
   final FriendRequestStatus status;
   final DateTime createdAt;
   final DateTime? responseAt;
@@ -12,7 +12,7 @@ class FriendRequestModel {
   FriendRequestModel({
     required this.id,
     required this.senderId,
-    required this.receiverid,
+    required this.receiverId,
     this.status = FriendRequestStatus.pending,
     required this.createdAt,
     this.responseAt,
@@ -23,7 +23,7 @@ class FriendRequestModel {
     return {
       'id': id,
       'senderId': senderId,
-      'receiverid': receiverid,
+      'receiverId': receiverId,
       'status': status,
       'createdAt': createdAt,
       'responseAt': responseAt?.millisecondsSinceEpoch,
@@ -35,7 +35,7 @@ class FriendRequestModel {
     return FriendRequestModel(
       id: map['id'] ?? '',
       senderId: map['senderId'] ?? '',
-      receiverid: map['receiverid'] ?? '',
+      receiverId: map['receiverId'] ?? '',
       status: FriendRequestStatus.values.firstWhere(
         (e) => e.name == map['status'],
         orElse: () => FriendRequestStatus.pending,
@@ -51,7 +51,7 @@ class FriendRequestModel {
   FriendRequestModel copyWith({
     String? id,
     String? senderId,
-    String? receiverid,
+    String? receiverId,
     FriendRequestStatus? status,
     DateTime? createdAt,
     DateTime? responseAt,
@@ -60,7 +60,7 @@ class FriendRequestModel {
     return FriendRequestModel(
       id: id ?? this.id,
       senderId: senderId ?? this.senderId,
-      receiverid: receiverid ?? this.receiverid,
+      receiverId: receiverId ?? this.receiverId,
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       responseAt: responseAt ?? this.responseAt,

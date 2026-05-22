@@ -1,4 +1,3 @@
-
 import 'package:chat_tutorial/controllers/profile_controller.dart';
 import 'package:chat_tutorial/routes/app_routes.dart';
 import 'package:chat_tutorial/views/auth/forgot_password_view.dart';
@@ -18,14 +17,14 @@ class AppPages {
     GetPage(name: AppRoutes.register, page: () => const RegisterView()),
     GetPage(
       name: AppRoutes.forgotPassword,
-      page: () => const ForgotPasswordView()
+      page: () => const ForgotPasswordView(),
     ),
     GetPage(
       name: AppRoutes.profile,
       page: () => const ProfileView(),
       binding: BindingsBuilder(() {
         Get.put(ProfileController());
-      })
+      }),
     ),
     GetPage(
       name: AppRoutes.changePassword,
