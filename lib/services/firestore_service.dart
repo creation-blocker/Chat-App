@@ -201,27 +201,31 @@ class FirestoreService {
     return _firestore
         .collection('friendRequests')
         .where('receiverId', isEqualTo: userId)
-        .where('status', isEqualTo: 'pending')
-        .orderBy('createdAt', descending: true)
         .snapshots()
-        .map(
-          (snapshot) => snapshot.docs
+        .map((snapshot) {
+          final requests = snapshot.docs
               .map((doc) => FriendRequestModel.fromMap(doc.data()))
-              .toList(),
-        );
+              .where((request) => request.status == FriendRequestStatus.pending)
+              .toList();
+
+          requests.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          return requests;
+        });
   }
 
   Stream<List<FriendRequestModel>> getSentFriendRequestsStream(String userId) {
     return _firestore
         .collection('friendRequests')
         .where('senderId', isEqualTo: userId)
-        .orderBy('createdAt', descending: true)
         .snapshots()
-        .map(
-          (snapshot) => snapshot.docs
+        .map((snapshot) {
+          final requests = snapshot.docs
               .map((doc) => FriendRequestModel.fromMap(doc.data()))
-              .toList(),
-        );
+              .toList();
+
+          requests.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+          return requests;
+        });
   }
 
   Future<FriendRequestModel?> getFriendRequest(
@@ -232,15 +236,19 @@ class FirestoreService {
       QuerySnapshot query = await _firestore
           .collection('friendRequests')
           .where('senderId', isEqualTo: senderId)
-          .where('receiverId', isEqualTo: receiverId)
-          .where('status', isEqualTo: 'pending')
           .get();
 
-      if (query.docs.isNotEmpty) {
-        return FriendRequestModel.fromMap(
-          query.docs.first.data() as Map<String, dynamic>,
+      for (var doc in query.docs) {
+        final request = FriendRequestModel.fromMap(
+          doc.data() as Map<String, dynamic>,
         );
+
+        if (request.receiverId == receiverId &&
+            request.status == FriendRequestStatus.pending) {
+          return request;
+        }
       }
+
       return null;
     } catch (e) {
       throw Exception('Failed to get friend request: ${e.toString()}');

@@ -24,8 +24,8 @@ class FriendRequestModel {
       'id': id,
       'senderId': senderId,
       'receiverId': receiverId,
-      'status': status,
-      'createdAt': createdAt,
+      'status': status.name,
+      'createdAt': createdAt.millisecondsSinceEpoch,
       'responseAt': responseAt?.millisecondsSinceEpoch,
       'message': message,
     };
@@ -40,12 +40,25 @@ class FriendRequestModel {
         (e) => e.name == map['status'],
         orElse: () => FriendRequestStatus.pending,
       ),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] ?? 0),
+      createdAt: _parseDateTime(map['createdAt']),
       responseAt: map['responseAt'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['responseAt'])
+          ? _parseDateTime(map['responseAt'])
           : null,
       message: map['message'],
     );
+  }
+
+  static DateTime _parseDateTime(dynamic value) {
+    if (value is int) {
+      return DateTime.fromMillisecondsSinceEpoch(value);
+    }
+    if (value is String) {
+      return DateTime.fromMillisecondsSinceEpoch(int.tryParse(value) ?? 0);
+    }
+    if (value is DateTime) {
+      return value;
+    }
+    return DateTime.fromMillisecondsSinceEpoch(0);
   }
 
   FriendRequestModel copyWith({
