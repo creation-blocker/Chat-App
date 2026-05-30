@@ -22,34 +22,9 @@ class AuthController extends GetxController {
   void onInit() {
     super.onInit();
     _user.bindStream(_authService.authStateChanges);
-    // ever(_user, _handleAuthStateChanges);
   }
 
-  // void _handleAuthStateChanges(User? user) {
-  //   if (user == null) {
-  //     if (Get.currentRoute != AppRoutes.login) {
-  //       Get.offAllNamed(AppRoutes.login);
-  //     }
-  //   } else {
-  //     if (Get.currentRoute != AppRoutes.profile) {
-  //       Get.offAllNamed(AppRoutes.profile);
-  //     }
-  //   }
-  //   if (!_isInitialized.value) {
-  //     _isInitialized.value = true;
-  //   }
-  // }
-
-  // void checkInitialAuthState() {
-  //   final currentUser = FirebaseAuth.instance.currentUser;
-  //   if (currentUser != null) {
-  //     _user.value = currentUser;
-  //     Get.offAllNamed(AppRoutes.main);
-  //   } else {
-  //     Get.offAllNamed(AppRoutes.login);
-  //   }
-  //   _isInitialized.value = true;
-  // }
+  
 
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {

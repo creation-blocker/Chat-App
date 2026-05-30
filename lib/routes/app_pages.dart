@@ -1,9 +1,13 @@
+import 'package:chat_tutorial/controllers/friends_controller.dart';
 import 'package:chat_tutorial/controllers/main_controller.dart';
 import 'package:chat_tutorial/controllers/profile_controller.dart';
+import 'package:chat_tutorial/controllers/user_list_controller.dart';
 import 'package:chat_tutorial/routes/app_routes.dart';
 import 'package:chat_tutorial/views/auth/forgot_password_view.dart';
 import 'package:chat_tutorial/views/auth/login_view.dart';
 import 'package:chat_tutorial/views/auth/register_view.dart';
+import 'package:chat_tutorial/views/find_people_view.dart';
+import 'package:chat_tutorial/views/friends_view.dart';
 import 'package:chat_tutorial/views/main_view.dart';
 import 'package:chat_tutorial/views/profile/change_password_view.dart';
 import 'package:chat_tutorial/views/profile/profile_view.dart';
@@ -38,6 +42,20 @@ class AppPages {
     GetPage(
       name: AppRoutes.changePassword,
       page: () => const ChangePasswordView(),
+    ),
+    GetPage(
+      name: AppRoutes.userList,
+      page: () => const FindPeopleView(),
+      binding: BindingsBuilder(() {
+        Get.put(UserListController());
+      }),
+    ),
+    GetPage(
+      name: AppRoutes.friends,
+      page: () => const FriendsView(),
+      binding: BindingsBuilder(() {
+        Get.put(FriendsController());
+      }),
     ),
   ];
 }
